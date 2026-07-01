@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lucky Draw — Digital Entrepreneurship Media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --paper: #f7f4ec;
+    --paper-dim: #efe9db;
+    --ink: #1b1b16;
+    --ink-soft: #57544a;
+    --forest: #1f3a2e;
+    --forest-deep: #142720;
+    --gold: #c1912e;
+    --gold-light: #e3c07f;
+    --line: #ddd4bc;
+    --white: #fffdf8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    min-height: 100vh;
+    background: var(--paper);
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* =====================
+   HEADER
+   ===================== */
+.header {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 48px 0;
+}
+
+.brandmark {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.monogram {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--forest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-light);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+}
+
+.brand-text .b1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+.brand-text .b2 {
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+}
+
+.header-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-align: right;
+    line-height: 1.5;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-right: 2px solid var(--gold);
+    padding-right: 12px;
+}
+
+/* =====================
+   MAIN
+   ===================== */
+.main {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 60px;
+}
+
+/* =====================
+   TITLE SECTION
+   ===================== */
+.title-section {
+    text-align: center;
+    margin-bottom: 30px;
+    max-width: 560px;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--forest);
+    margin-bottom: 14px;
+}
+
+.eyebrow::before, .eyebrow::after {
+    content: '';
+    width: 18px;
+    height: 1px;
+    background: var(--gold);
+}
+
+h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: 56px;
+    letter-spacing: -1.5px;
+    line-height: 1;
+    color: var(--ink);
+}
+
+h1 span {
+    color: var(--forest);
+    font-style: italic;
+}
+
+.subtitle {
+    margin-top: 10px;
+    font-size: 15px;
+    color: var(--ink-soft);
+}
+
+/* growth line signature element */
+.growth-line {
+    width: 220px;
+    height: 46px;
+    margin: 20px auto 0;
+}
+
+.growth-line path {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    animation: draw-line 1.4s ease forwards 0.3s;
+}
+
+.growth-line circle {
+    fill: var(--forest);
+    opacity: 0;
+    animation: pop-dot 0.4s ease forwards 1.6s;
+}
+
+@keyframes draw-line {
+    to { stroke-dashoffset: 0; }
+}
+@keyframes pop-dot {
+    to { opacity: 1; }
+}
+
+/* =====================
+   CARD
+   ===================== */
+.card {
+    width: 100%;
+    max-width: 480px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 32px;
+    box-shadow: 0 1px 0 var(--line), 0 20px 40px -24px rgba(20,39,32,0.25);
+    position: relative;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--forest), var(--gold));
+}
+
+.upload-zone {
+    border: 1.5px dashed var(--line);
+    border-radius: 3px;
+    padding: 28px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.upload-zone:hover {
+    border-color: var(--gold);
+    background: rgba(193,145,46,0.04);
+}
+
+.upload-icon {
+    font-size: 22px;
+    display: block;
+    margin-bottom: 10px;
+    opacity: 0.7;
+}
+
+.upload-zone p {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.upload-zone .hint {
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+}
+
+.file-tag {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 12px;
+    padding: 6px 12px;
+    background: var(--paper-dim);
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--forest);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.count-wrap {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 16px 0;
+}
+
+.count-wrap label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--ink-soft);
+}
+
+.count-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.cnt-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--white);
+    color: var(--forest);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cnt-btn:hover { border-color: var(--forest); background: var(--forest); color: var(--white); }
+
+#countDisplay {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 20px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.draw-btn {
+    width: 100%;
+    margin-top: 24px;
+    padding: 16px;
+    border: none;
+    border-radius: 3px;
+    background: var(--forest);
+    color: var(--white);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+.draw-btn:hover:not(:disabled) { background: var(--forest-deep); }
+.draw-btn:active:not(:disabled) { transform: scale(0.99); }
+.draw-btn:disabled {
+    background: var(--paper-dim);
+    color: var(--ink-soft);
+    cursor: not-allowed;
+}
+
+.rolling-section {
+    margin-top: 22px;
+    text-align: center;
+    min-height: 50px;
+}
+
+.rolling-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.rolling-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 22px;
+    margin-top: 6px;
+    color: var(--ink);
+    filter: blur(0.4px);
+}
+
+/* =====================
+   WINNERS
+   ===================== */
+.winners-section {
+    width: 100%;
+    max-width: 480px;
+    margin-top: 32px;
+}
+
+.section-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+.section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+}
+
+.winner-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 4px;
+    border-bottom: 1px solid var(--line);
+    opacity: 0;
+    animation: row-in 0.4s ease forwards;
+}
+
+@keyframes row-in {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.w-rank {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--gold);
+    width: 28px;
+    flex-shrink: 0;
+}
+
+.w-info { flex: 1; }
+
+.w-name {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--ink);
+}
+
+.w-sub {
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+
+.w-mark {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--forest);
+    flex-shrink: 0;
+}
+
+/* =====================
+   FOOTER
+   ===================== */
+.footer {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 24px 20px 30px;
+    border-top: 1px solid var(--line);
+    margin-top: 20px;
+}
+
+.footer-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--ink-soft);
+}
+
+/* =====================
+   CONFETTI (minimal, restrained)
+   ===================== */
+.confetti-piece {
+    position: fixed;
+    top: -20px;
+    z-index: 50;
+    pointer-events: none;
+    animation: fall linear forwards;
+}
+@keyframes fall {
+    to { transform: translateY(110vh) rotate(180deg); opacity: 0; }
+}
+
+/* =====================
+   RESPONSIVE
+   ===================== */
+@media (max-width: 600px) {
+    .header { padding: 20px 20px 0; }
+    h1 { font-size: 40px; }
+    .card { padding: 24px; }
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brandmark">
+    <div class="monogram">DEM</div>
+    <div class="brand-text">
+      <span class="b1">Digital Entrepreneurship</span>
+      <span class="b2">Media</span>
+    </div>
+  </div>
+  <div class="header-tag">Industri<br>Kreatif</div>
+</div>
+
+<div class="main">
+  <div class="title-section">
+    <div class="eyebrow">Undian Pemenang</div>
+    <h1>Lucky <span>Draw</span></h1>
+    <p class="subtitle">Setiap peserta punya peluang yang sama, biarkan sistem yang menentukan siapa berikutnya</p>
+    <svg class="growth-line" viewBox="0 0 220 46" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 38 L60 30 L100 34 L140 14 L180 18 L216 6"/>
+      <circle cx="216" cy="6" r="4"/>
+    </svg>
+  </div>
+
+  <div class="card">
+    <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" hidden>
+
+    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+      <span class="upload-icon">&#128203;</span>
+      <p>Upload File Data Peserta</p>
+      <p class="hint">Format: .xlsx atau .csv &bull; Nama di kolom A</p>
+      <div class="file-tag" id="fileTag">
+        <span>&#10003;</span><span id="tagName"></span>
+      </div>
+    </div>
+
+    <div class="count-wrap">
+      <label>Jumlah Pemenang</label>
+      <div class="count-row">
+        <button class="cnt-btn" onclick="changeCount(-1)">&#8722;</button>
+        <span id="countDisplay" class="mono">1</span>
+        <button class="cnt-btn" onclick="changeCount(1)">&#43;</button>
+      </div>
+    </div>
+
+    <button class="draw-btn" id="drawBtn" onclick="startDraw()" disabled>
+      MULAI UNDIAN
+    </button>
+
+    <div class="rolling-section">
+      <div class="rolling-label" id="rollingLabel">Mengacak peserta&hellip;</div>
+      <div class="rolling-name" id="rollingName"></div>
+    </div>
+  </div>
+
+  <div class="winners-section" id="winnersSection" style="display:none">
+    <div class="section-title">Pemenang Undian</div>
+    <div id="winnersList"></div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="footer-text">Dibuat oleh Divisi Riset - HMTI FT Unsika</span>
+</div>
+
+<script>
+
+// =============================================
+// LUCKY DRAW - DIGITAL ENTREPRENEURSHIP MEDIA
+// Versi: Self-contained (tanpa library eksternal)
+// =============================================
+
+let participants = [];
+let winnerCount = 1;
+let isDrawing = false;
+
+// =============================================
+// XLSX PARSER (tanpa library eksternal)
+// Menggunakan browser File API + DecompressionStream
+// =============================================
+
+// Baca entri-entri ZIP secara async (xlsx = file ZIP berisi XML)
+async function readZipEntriesAsync(buffer) {
+    const entries = [];
+    const bytes = new Uint8Array(buffer);
+    const view = new DataView(buffer);
+    let i = 0;
+
+    while (i < bytes.length - 4) {
+        if (view.getUint32(i, true) !== 0x04034b50) { i++; continue; }
+
+        const compression = view.getUint16(i + 8, true);
+        const compSize    = view.getUint32(i + 18, true);
+        const nameLen     = view.getUint16(i + 26, true);
+        const extraLen    = view.getUint16(i + 28, true);
+
+        const name = new TextDecoder().decode(bytes.slice(i + 30, i + 30 + nameLen));
+        const dataStart = i + 30 + nameLen + extraLen;
+        const compData  = bytes.slice(dataStart, dataStart + compSize);
+
+        let data;
+        if (compression === 0) {
+            data = compData;
+        } else if (compression === 8) {
+            // Raw DEFLATE - DecompressionStream butuh 'deflate-raw'
+            try {
+                const ds = new DecompressionStream('deflate-raw');
+                const writer = ds.writable.getWriter();
+                const reader = ds.readable.getReader();
+                writer.write(compData);
+                writer.close();
+
+                const chunks = [];
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    chunks.push(value);
+                }
+
+                const total = chunks.reduce((a, c) => a + c.length, 0);
+                data = new Uint8Array(total);
+                let offset = 0;
+                for (const chunk of chunks) {
+                    data.set(chunk, offset);
+                    offset += chunk.length;
+                }
+            } catch(e) {
+                data = compData;
+            }
+        } else {
+            data = compData;
+        }
+
+        if (name && !name.endsWith('/')) {
+            entries.push({ name, data });
+        }
+
+        i = dataStart + compSize;
+    }
+    return entries;
+}
+
+// Parse sharedStrings.xml
+function parseSharedStrings(xml) {
+    const strings = [];
+    const siMatches = xml.match(/<si>[\s\S]*?<\/si>/g) || [];
+    for (const si of siMatches) {
+        const tMatches = si.match(/<t[^>]*>([^<]*)<\/t>/g) || [];
+        const text = tMatches.map(t => t.replace(/<t[^>]*>|<\/t>/g, '')).join('');
+        strings.push(decodeXML(text));
+    }
+    return strings;
+}
+
+// Parse sheet1.xml, return array of rows (array of values)
+function parseSheet(xml, sharedStrings) {
+    const rows = [];
+    const rowMatches = xml.match(/<row[^>]*>[\s\S]*?<\/row>/g) || [];
+
+    for (const rowXml of rowMatches) {
+        const row = [];
+        const cellMatches = rowXml.match(/<c [^>]*>[\s\S]*?<\/c>/g) || [];
+
+        for (const cellXml of cellMatches) {
+            const typeMatch  = cellXml.match(/t="([^"]*)"/);
+            const type       = typeMatch ? typeMatch[1] : '';
+            const vMatch     = cellXml.match(/<v>([^<]*)<\/v>/);
+            const val        = vMatch ? vMatch[1] : '';
+
+            let cellValue = '';
+            if (type === 's') {
+                cellValue = sharedStrings[parseInt(val)] || '';
+            } else if (type === 'inlineStr') {
+                const tMatch = cellXml.match(/<t[^>]*>([^<]*)<\/t>/);
+                cellValue = tMatch ? decodeXML(tMatch[1]) : '';
+            } else {
+                cellValue = val;
+            }
+            row.push(cellValue);
+        }
+        if (row.length > 0) rows.push(row);
+    }
+    return rows;
+}
+
+function decodeXML(str) {
+    return str
+        .replace(/&amp;/g,  '&')
+        .replace(/&lt;/g,   '<')
+        .replace(/&gt;/g,   '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&apos;/g, "'");
+}
+
+// =============================================
+// FILE UPLOAD HANDLER
+// =============================================
+
+const fileInput = document.getElementById('fileInput');
+fileInput.addEventListener('change', handleFile);
+
+const zone = document.getElementById('uploadZone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.borderColor = 'var(--gold)'; });
+zone.addEventListener('dragleave', () => { zone.style.borderColor = ''; });
+zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.style.borderColor = '';
+    const f = e.dataTransfer.files[0];
+    if (f) handleFile({ target: { files: [f] } });
+});
+
+async function handleFile(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    document.getElementById('tagName').textContent = file.name;
+    document.getElementById('fileTag').style.display = 'flex';
+
+    const ext = file.name.toLowerCase().split('.').pop();
+
+    try {
+        if (ext === 'csv') {
+            const text = await file.text();
+            const lines = text.split(/\r?\n/).filter(l => l.trim());
+            participants = lines
+                .slice(1)
+                .map(l => {
+                    const col = l.split(',')[0].replace(/^"|"$/g, '').trim();
+                    return col;
+                })
+                .filter(Boolean);
+
+        } else if (ext === 'xlsx' || ext === 'xls') {
+            const buffer = await file.arrayBuffer();
+            const entries = await readZipEntriesAsync(buffer);
+
+            let sharedStrings = [];
+            let rows = [];
+
+            for (const entry of entries) {
+                if (entry.name === 'xl/sharedStrings.xml') {
+                    const xml = new TextDecoder().decode(entry.data);
+                    sharedStrings = parseSharedStrings(xml);
+                }
+            }
+            for (const entry of entries) {
+                if (entry.name === 'xl/worksheets/sheet1.xml') {
+                    const xml = new TextDecoder().decode(entry.data);
+                    rows = parseSheet(xml, sharedStrings);
+                }
+            }
+
+            // Skip header row (row pertama), ambil kolom pertama
+            participants = rows
+                .slice(1)
+                .map(r => (r[0] || '').toString().trim())
+                .filter(Boolean);
+
+        } else {
+            alert('Format tidak didukung. Gunakan .xlsx atau .csv');
+            return;
+        }
+
+        updateBtn();
+
+    } catch (err) {
+        console.error('Error membaca file:', err);
+        alert('Gagal membaca file. Pastikan file tidak rusak dan formatnya benar (.xlsx atau .csv).');
+    }
+}
+
+// =============================================
+// UPDATE BUTTON STATE
+// =============================================
+
+function updateBtn() {
+    const btn = document.getElementById('drawBtn');
+    if (participants.length > 0) {
+        btn.disabled = false;
+        btn.textContent = 'MULAI UNDIAN (' + participants.length + ' peserta)';
+    } else {
+        btn.disabled = true;
+        alert('Tidak ada data ditemukan di kolom pertama. Pastikan nama peserta ada di kolom A.');
+    }
+}
+
+// =============================================
+// WINNER COUNT CONTROL
+// =============================================
+
+function changeCount(d) {
+    winnerCount = Math.max(1, Math.min(winnerCount + d, Math.max(participants.length, 10)));
+    document.getElementById('countDisplay').textContent = winnerCount;
+}
+
+// =============================================
+// START DRAW
+// =============================================
+
+async function startDraw() {
+    if (isDrawing || participants.length === 0) return;
+    isDrawing = true;
+
+    document.getElementById('winnersSection').style.display = 'none';
+    document.getElementById('winnersList').innerHTML = '';
+    document.getElementById('rollingLabel').style.opacity = '1';
+    document.getElementById('rollingName').textContent = '';
+
+    const btn = document.getElementById('drawBtn');
+    btn.disabled = true;
+    btn.textContent = 'MENGUNDI...';
+
+    const count = Math.min(winnerCount, participants.length);
+    const pool = [...participants];
+    // Fisher-Yates shuffle
+    for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    const winners = pool.slice(0, count);
+
+    await roll(3200);
+
+    document.getElementById('rollingLabel').style.opacity = '0';
+    document.getElementById('rollingName').textContent = '';
+    document.getElementById('winnersSection').style.display = 'block';
+
+    const list = document.getElementById('winnersList');
+
+    winners.forEach((name, i) => {
+        setTimeout(() => {
+            const div = document.createElement('div');
+            div.className = 'winner-card';
+            div.style.animationDelay = (i * 0.12) + 's';
+            div.innerHTML =
+                '<div class="w-rank mono">' + String(i + 1).padStart(2, '0') + '</div>' +
+                '<div class="w-info">' +
+                    '<div class="w-name">' + escapeHTML(name) + '</div>' +
+                    '<div class="w-sub">Pemenang ke-' + (i + 1) + '</div>' +
+                '</div>' +
+                '<div class="w-mark"></div>';
+            list.appendChild(div);
+        }, i * 160);
+    });
+
+    setTimeout(confetti, 300);
+    isDrawing = false;
+    btn.disabled = false;
+    btn.textContent = 'UNDIAN LAGI';
+}
+
+function escapeHTML(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// =============================================
+// ROLLING ANIMATION (saat shuffle)
+// =============================================
+
+function roll(duration) {
+    return new Promise(res => {
+        const start = Date.now();
+        const el = document.getElementById('rollingName');
+        function tick() {
+            const p = (Date.now() - start) / duration;
+            if (p >= 1) {
+                el.textContent = '';
+                res();
+                return;
+            }
+            el.textContent = participants[Math.floor(Math.random() * participants.length)];
+            setTimeout(tick, 50 + p * p * 300);
+        }
+        tick();
+    });
+}
+
+// =============================================
+// CONFETTI EFFECT (minimal, palet brand saja)
+// =============================================
+
+function confetti() {
+    const cols = ['#1f3a2e','#c1912e','#e3c07f','#1b1b16'];
+    for (let i = 0; i < 60; i++) {
+        setTimeout(() => {
+            const el = document.createElement('div');
+            el.className = 'confetti-piece';
+            const size = 5 + Math.random() * 6;
+            el.style.cssText =
+                'left:' + (Math.random() * 100) + 'vw;' +
+                'background:' + cols[Math.floor(Math.random() * cols.length)] + ';' +
+                'width:' + size + 'px;' +
+                'height:' + size + 'px;' +
+                'border-radius:' + (Math.random() > 0.5 ? '50%' : '2px') + ';' +
+                'animation-duration:' + (2 + Math.random() * 1.5) + 's';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 4000);
+        }, i * 30);
+    }
+}
+
+</script>
+
+</body>
+</html>
